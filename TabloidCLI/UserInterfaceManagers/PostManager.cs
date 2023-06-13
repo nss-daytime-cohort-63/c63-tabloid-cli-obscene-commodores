@@ -39,7 +39,7 @@ namespace TabloidCLI.UserInterfaceManagers
             switch (choice)
             {
                 case "1":
-                    //List();
+                    List();
                     return this;
                 case "2":
                     return this;
@@ -97,5 +97,14 @@ namespace TabloidCLI.UserInterfaceManagers
 
             Console.WriteLine("Post added successfully");
         }
+        private void List()
+        {
+            List<Post> posts = _postRepository.GetAll();
+            foreach (Post post in posts)
+            {
+                Console.WriteLine($"{post.Title} from {post.Url} by {post.Author.FirstName} {post.Author.LastName} on the {post.Blog.Title} blog.");
+            }
+        }
+
     }
 }
