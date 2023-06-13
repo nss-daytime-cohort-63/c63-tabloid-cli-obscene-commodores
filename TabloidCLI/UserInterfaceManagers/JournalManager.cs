@@ -43,21 +43,14 @@ namespace TabloidCLI.UserInterfaceManagers
                 case "1":
                     List();
                     return this;
-
-                case "2":
-                    break;
                 case "3":
-
-                    break;
+                    Add();
+                    return this;
                 default:
                     Console.WriteLine("Invalid Selection");
                     return this;
             }
-
-
-
-
-            
+  
         }
         private void List()
             {
