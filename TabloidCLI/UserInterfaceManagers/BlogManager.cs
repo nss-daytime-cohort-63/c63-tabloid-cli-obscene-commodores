@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TabloidCLI.Repositories;
 using TabloidCLI.Models;
-using System.ComponentModel;
+
 
 namespace TabloidCLI.UserInterfaceManagers
 {
@@ -26,6 +26,7 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine("Blog Menu");
             Console.WriteLine(" 1) List Blogs");
             Console.WriteLine(" 2) Add a Blog");
+            Console.WriteLine(" 3) Delete a Blog");
             Console.WriteLine(" 0) Go back");
 
             Console.Write("> ");
@@ -37,6 +38,9 @@ namespace TabloidCLI.UserInterfaceManagers
                     return this;
                 case "2":
                     AddNewBlog();
+                    return this;
+                case "3":
+                    DeleteBlog();
                     return this;
                 case "0":
                     return _parentUI;
@@ -65,6 +69,12 @@ namespace TabloidCLI.UserInterfaceManagers
                 Url = bogUrl
             };
             _blogRepository.Insert(newBlog);
+        }
+        private void DeleteBlog()
+        {
+            Console.Write("Enter Blog Id to Delete: ");
+            int delBlogId = Int32.Parse(Console.ReadLine());
+            _blogRepository.Delete(delBlogId);
         }
     }
 }
