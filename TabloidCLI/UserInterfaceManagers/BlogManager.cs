@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TabloidCLI.Repositories;
+using TabloidCLI.Models;
+using System.ComponentModel;
 
 namespace TabloidCLI.UserInterfaceManagers
 {
@@ -21,7 +23,48 @@ namespace TabloidCLI.UserInterfaceManagers
         }
         public IUserInterfaceManager Execute()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Blog Menu");
+            Console.WriteLine(" 1) List Blogs");
+            Console.WriteLine(" 2) Add a Blog");
+            Console.WriteLine(" 0) Go back");
+
+            Console.Write("> ");
+            string choice = Console.ReadLine();
+            switch (choice)
+            {
+                case "1":
+                    List();
+                    return this;
+                case "2":
+                    AddNewBlog();
+                    return this;
+                case "0":
+                    return _parentUI;
+                default:
+                    Console.WriteLine("Invalid Selection");
+                    return this;
+            }
+        }
+        private void List()
+        {
+            List<Blog> blogs = _blogRepository.GetAll();
+            foreach(Blog blog in blogs)
+            {
+                Console.WriteLine(blog.Title);
+            }
+        }
+        private void AddNewBlog()
+        {
+            Console.Write("What is the Title of the new blog? : ");
+            string blogTitle = Console.ReadLine();
+            Console.Write("What is the url of the new blog? : ");
+            string bogUrl = Console.ReadLine();
+            Blog newBlog = new Blog()
+            {
+                Title = blogTitle,
+                Url = bogUrl
+            };
+            _blogRepository.Insert(newBlog);
         }
     }
 }
