@@ -3,22 +3,20 @@ using System.Collections.Generic;
 using TabloidCLI.Models;
 
 
-namespace TabloidCLI.UserInrefaceManagers
+namespace TabloidCLI.UserInterfaceManagers
 {
 	public class ColorManager : IUserInterfaceManager
+    {
+        private readonly IUserInterfaceManager _parentUI;
+        private AuthorRepository _authorRepository;
+        private string ConnectionString;
 	{
-		private readonly IUserInterfaceManager _parentUI;
-		private ColorRepository _colorRepository;
-		private string _connectionString;
 
-		public ColorManager(IUserInterfaceManager parentUI, string connectionString)
+        public ColorManager()
 		{
-			_parentUI = parentUI;
-			_colorRepository = new ColorRepository(connectionString);
-			_connectionString = connectionString;
+				
 		}
-
-		public IUserInterfaceManager Execute()
+        public string SelectedColor() 
 		{
 			Console.WriteLine("Color Menu");
 			Console.WriteLine("1) Black");
@@ -43,26 +41,30 @@ namespace TabloidCLI.UserInrefaceManagers
 			switch (choice)
 			{
 				case "1":
+					/*newColor.BackgroundColor = Blue;*/
 					Console.BackgroundColor = ConsoleColor.Blue;
-					return this;
-				case "2":
-					Add();
+					string choice2 = "";
+                    return choice2;
+				/*case "2":
+					Console.BackgroundColor = BackgroundColor.Blue
 					return this;
 				case "3":
-					Add();
 					return this;
 				case "4":
-					Edit();
 					return this;
 				case "5":
-					Remove();
-					return this;
+					return this;*/
 				case "0":
 					return _parentUI;
 				default:
-					Console.WriteLine("Invalid Selection");
-					return this;
+					string invalid = "Invalid Selection";
+					return invalid;
 			}
 		}
-	}
+
+        public IUserInterfaceManager Execute()
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
