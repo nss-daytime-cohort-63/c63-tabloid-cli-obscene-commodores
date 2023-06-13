@@ -21,6 +21,22 @@ namespace TabloidCLI.UserInrefaceManagers
 		public IUserInterfaceManager Execute()
 		{
 			Console.WriteLine("Color Menu");
+			Console.WriteLine("1) Black");
+			Console.WriteLine("2) Blue");
+			Console.WriteLine("3) Cyan");
+			Console.WriteLine("4) Dark Blue");
+			Console.WriteLine("5) Dark Cyan");
+			Console.WriteLine("6) Dark Gray");
+			Console.WriteLine("7) Dark Green");
+			Console.WriteLine("8) Dark Magenta");
+			Console.WriteLine("9) Dark Red");
+			Console.WriteLine("10) Dark Yellow");
+			Console.WriteLine("11) Gray");
+			Console.WriteLine("12) Green");
+			Console.WriteLine("13) Magenta");
+			Console.WriteLine("14) Red");
+			Console.WriteLine("15) White");
+			Console.WriteLine("16) Yellow");
 
 			Console.Write("> ");
 			string choice = Console.ReadLine();
