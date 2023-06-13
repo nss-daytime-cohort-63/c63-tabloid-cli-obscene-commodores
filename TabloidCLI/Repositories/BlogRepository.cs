@@ -51,7 +51,20 @@ namespace TabloidCLI.Repositories
 
         public void Insert(Blog entry)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"INSERT INTO Blog (Title, Url)
+                                        OUTPUT INSERTED.Id
+                                        Values (@title, @url)";
+                    cmd.Parameters.AddWithValue("@title", entry.Title);
+                    cmd.Parameters.AddWithValue("@url", entry.Url);
+                    int id = (int)cmd.ExecuteScalar();
+                    entry.Id = id;
+                }
+            }
         }
 
         public void Update(Blog entry)
