@@ -23,7 +23,39 @@ namespace TabloidCLI.UserInterfaceManagers
 
         public IUserInterfaceManager Execute()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Post Menu");
+            Console.WriteLine(" 1) List Posts");
+            Console.WriteLine(" 2) Post Details");
+            Console.WriteLine(" 3) Add Post");
+            Console.WriteLine(" 4) Edit Post");
+            Console.WriteLine(" 5) Remove Post");
+            Console.WriteLine(" 0) Go Back");
+
+            Console.Write("> ");
+            string choice = Console.ReadLine();
+            switch (choice)
+            {
+                case "1":
+                    //List();
+                    return this;
+                case "2":
+                    return this;
+                   
+                case "3":
+                   // Add();
+                    return this;
+                case "4":
+                   // Edit();
+                    return this;
+                case "5":
+                    //Remove();
+                    return this;
+                case "0":
+                    return _parentUI;
+                default:
+                    Console.WriteLine("Invalid Selection");
+                    return this;
+            }
         }
     }
 }
