@@ -12,13 +12,16 @@ namespace TabloidCLI.UserInterfaceManagers
     {
         private readonly IUserInterfaceManager _parentUI;
         private PostRepository _postRepository;
+        private AuthorRepository _authorRepository;
+        private BlogRepository _blogRepository;
         private string _connectionString;
 
         public PostManager(IUserInterfaceManager parentUI, string connectionString)
         {
             _parentUI = parentUI;
             _postRepository = new PostRepository(connectionString);
-            _connectionString = connectionString;
+            _authorRepository = new AuthorRepository(connectionString);
+            _blogRepository = new BlogRepository(connectionString);
         }
 
         public IUserInterfaceManager Execute()
@@ -42,7 +45,7 @@ namespace TabloidCLI.UserInterfaceManagers
                     return this;
                    
                 case "3":
-                   // Add();
+                    Add();
                     return this;
                 case "4":
                    // Edit();
@@ -56,6 +59,43 @@ namespace TabloidCLI.UserInterfaceManagers
                     Console.WriteLine("Invalid Selection");
                     return this;
             }
+        }
+        private void Add()
+        {
+            Console.WriteLine("New Post");
+            Post post = new Post();
+
+            Console.WriteLine("Title: ");
+
+            post.Title = Console.ReadLine();
+
+            Console.Write("Url: ");
+            post.Url = Console.ReadLine();
+
+            post.PublishDateTime =  DateTime.Now;
+            List<Author> authors = _authorRepository.GetAll();
+            foreach (Author author in authors)
+            {
+                Console.WriteLine($"Id: {author.Id} - {author.FirstName} {author.LastName}");
+            }
+            Console.Write("AuthorId: ");
+            int matchingId = int.Parse(Console.ReadLine());
+            post.Author = authors.Where(a => a.Id == matchingId).FirstOrDefault();
+
+            List<Blog> blogs = _blogRepository.GetAll();
+            foreach (Blog blog in blogs)
+            {
+                Console.WriteLine($"Id: {blog.Id} - {blog.Title} {blog.Url}");
+            }
+            Console.Write("BlogId: ");
+            int matchingBlogId = int.Parse(Console.ReadLine());
+            post.Blog = blogs.Where(b => b.Id == matchingBlogId).FirstOrDefault();
+            
+
+
+           _postRepository.Insert(post);
+
+            Console.WriteLine("Post added successfully");
         }
     }
 }
