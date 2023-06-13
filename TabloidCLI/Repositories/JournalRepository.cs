@@ -56,7 +56,7 @@ namespace TabloidCLI.Repositories
 
         public void Insert(Journal entry)
         {
-            throw new NotImplementedException();
+           
         }
 
         public void Update(Journal entry)

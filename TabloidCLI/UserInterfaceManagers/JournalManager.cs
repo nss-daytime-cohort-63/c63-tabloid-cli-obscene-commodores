@@ -30,7 +30,7 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine("Journal Menu");
             Console.WriteLine(" 1) List Journals");
             //Console.WriteLine(" 2) Author Details");
-            //Console.WriteLine(" 3) Add Author");
+            Console.WriteLine(" 3) Add Journal");
             //Console.WriteLine(" 4) Edit Author");
             //Console.WriteLine(" 5) Remove Author");
             //Console.WriteLine(" 0) Go Back");
@@ -43,6 +43,12 @@ namespace TabloidCLI.UserInterfaceManagers
                 case "1":
                     List();
                     return this;
+
+                case "2":
+                    break;
+                case "3":
+
+                    break;
                 default:
                     Console.WriteLine("Invalid Selection");
                     return this;
@@ -61,5 +67,21 @@ namespace TabloidCLI.UserInterfaceManagers
                   Console.WriteLine(journal.Title);
                 }
             }
+
+        private void Add()
+        {
+            Journal addJournal = new Journal();
+
+            Console.WriteLine("What is the New Journal's Title?");
+
+            addJournal.Title = Console.ReadLine();
+
+            Console.WriteLine("Fill the content of the journal");
+            addJournal.Content = Console.ReadLine();
+            Console.WriteLine("now adding current date");
+            addJournal.CreateDateTime = DateTime.Now;
+
+            _journalRepository.Insert(addJournal);
+        }
     }
 }
