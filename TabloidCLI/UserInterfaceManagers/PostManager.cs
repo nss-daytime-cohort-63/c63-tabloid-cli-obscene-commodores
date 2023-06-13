@@ -65,10 +65,14 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine("New Post");
             Post post = new Post();
 
+            Console.WriteLine("Title: ");
+
+            post.Title = Console.ReadLine();
+
             Console.Write("Url: ");
             post.Url = Console.ReadLine();
 
-            post.PublishDateTime = new DateTime();
+            post.PublishDateTime =  DateTime.Now;
             List<Author> authors = _authorRepository.GetAll();
             foreach (Author author in authors)
             {
@@ -90,6 +94,8 @@ namespace TabloidCLI.UserInterfaceManagers
 
 
            _postRepository.Insert(post);
+
+            Console.WriteLine("Post added successfully");
         }
     }
 }
