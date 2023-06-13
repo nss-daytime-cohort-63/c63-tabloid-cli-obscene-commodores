@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TabloidCLI.Repositories;
-
+using TabloidCLI.Models;
 namespace TabloidCLI.UserInterfaceManagers
 {
     public class BlogManager : IUserInterfaceManager
@@ -21,7 +21,31 @@ namespace TabloidCLI.UserInterfaceManagers
         }
         public IUserInterfaceManager Execute()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Blog Menu");
+            Console.WriteLine(" 1) List Blogs");
+            Console.WriteLine(" 0) Go back");
+
+            Console.Write("> ");
+            string choice = Console.ReadLine();
+            switch (choice)
+            {
+                case "1":
+                    List();
+                    return this;
+                case "0":
+                    return _parentUI;
+                default:
+                    Console.WriteLine("Invalid Selection");
+                    return this;
+            }
+        }
+        private void List()
+        {
+            List<Blog> blogs = _blogRepository.GetAll();
+            foreach(Blog blog in blogs)
+            {
+                Console.WriteLine(blog.Title);
+            }
         }
     }
 }
