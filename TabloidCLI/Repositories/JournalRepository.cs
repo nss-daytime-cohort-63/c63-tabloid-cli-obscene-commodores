@@ -56,7 +56,20 @@ namespace TabloidCLI.Repositories
 
         public void Insert(Journal entry)
         {
-           
+           using(SqlConnection conn = Connection) 
+            {
+                conn.Open();
+                using (SqlCommand cmd =conn.CreateCommand())
+                {
+                    cmd.CommandText = @"Insert into Journal (Title, Content, CreateDateTime)
+                                        values (@title, @content, @datetime)";
+                    cmd.Parameters.AddWithValue("@title", entry.Title);
+                    cmd.Parameters.AddWithValue("@content", entry.Content);
+                    cmd.Parameters.AddWithValue("@datetime", entry.CreateDateTime);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
         public void Update(Journal entry)
