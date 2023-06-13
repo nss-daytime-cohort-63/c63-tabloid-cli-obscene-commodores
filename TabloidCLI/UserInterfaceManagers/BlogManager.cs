@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TabloidCLI.Repositories;
 using TabloidCLI.Models;
+using System.ComponentModel;
+
 namespace TabloidCLI.UserInterfaceManagers
 {
     public class BlogManager : IUserInterfaceManager
@@ -23,6 +25,7 @@ namespace TabloidCLI.UserInterfaceManagers
         {
             Console.WriteLine("Blog Menu");
             Console.WriteLine(" 1) List Blogs");
+            Console.WriteLine(" 2) Add a Blog");
             Console.WriteLine(" 0) Go back");
 
             Console.Write("> ");
@@ -31,6 +34,9 @@ namespace TabloidCLI.UserInterfaceManagers
             {
                 case "1":
                     List();
+                    return this;
+                case "2":
+                    AddNewBlog();
                     return this;
                 case "0":
                     return _parentUI;
@@ -46,6 +52,19 @@ namespace TabloidCLI.UserInterfaceManagers
             {
                 Console.WriteLine(blog.Title);
             }
+        }
+        private void AddNewBlog()
+        {
+            Console.Write("What is the Title of the new blog? : ");
+            string blogTitle = Console.ReadLine();
+            Console.Write("What is the url of the new blog? : ");
+            string bogUrl = Console.ReadLine();
+            Blog newBlog = new Blog()
+            {
+                Title = blogTitle,
+                Url = bogUrl
+            };
+            _blogRepository.Insert(newBlog);
         }
     }
 }
