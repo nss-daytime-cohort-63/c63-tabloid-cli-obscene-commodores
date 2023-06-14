@@ -48,7 +48,7 @@ namespace TabloidCLI.UserInterfaceManagers
                     Add();
                     return this;
                 case "4":
-                   // Edit();
+                   Edit();
                     return this;
                 case "5":
                     Remove();
@@ -109,6 +109,7 @@ namespace TabloidCLI.UserInterfaceManagers
         private void Remove()
         {
             List<Post> posts = _postRepository.GetAll();
+            Console.WriteLine("Remove which post(Id)?");
             foreach (Post post in posts)
             {
                 Console.WriteLine($"Id: {post.Id} - {post.Title} by {post.Author.FirstName} {post.Author.LastName}.");
@@ -117,7 +118,61 @@ namespace TabloidCLI.UserInterfaceManagers
             
             
                 _postRepository.Delete(postIdToDelete);
-            
+            Console.WriteLine("Post removed");
+
+        }
+
+        private void Edit()
+        {
+            List<Post> posts = _postRepository.GetAll();
+            Console.WriteLine("Edit which post()Id?");
+            foreach (Post post in posts)
+            {
+                Console.WriteLine($"Id: {post.Id} - {post.Title} by {post.Author.FirstName} {post.Author.LastName}.");
+            }
+            int selectedPostId = int.Parse(Console.ReadLine());
+            Post postToEdit = posts.FirstOrDefault(p => p.Id == selectedPostId); 
+            Console.WriteLine();
+            Console.Write("New title (blank to leave unchanged: ");
+            string title = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(title))
+            {
+                postToEdit.Title = title;
+            }
+            Console.Write("New url (blank to leave unchanged: ");
+            string url = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(url))
+            {
+                postToEdit.Url = url;
+            }
+            Console.Write("New Author by Id (blank to leave unchanged: ");
+            List<Author> authors = _authorRepository.GetAll();
+            foreach (Author author in authors)
+            {
+                Console.WriteLine($"Id: {author.Id} - {author.FirstName} {author.LastName}");
+            }
+            string selectedAuthorId = Console.ReadLine();
+            if(!string.IsNullOrWhiteSpace(selectedAuthorId))
+            {
+                int parsedAuthorId = int.Parse(selectedAuthorId);
+                postToEdit.Author = authors.FirstOrDefault(a => a.Id == parsedAuthorId);
+            }
+            Console.Write("New Blog by Id (blank to leave unchanged: ");
+            List<Blog> blogs = _blogRepository.GetAll();
+            foreach (Blog blog in blogs)
+            {
+                Console.WriteLine($"Id: {blog.Id} - {blog.Title} {blog.Url}");
+            }
+            string selectedBlogId = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(selectedBlogId))
+            {
+                int parsedBlogId = int.Parse(selectedBlogId);
+                postToEdit.Blog = blogs.FirstOrDefault(b => b.Id == parsedBlogId);
+            }
+
+            _postRepository.Update(postToEdit);
+
+            Console.WriteLine("Post has been updated");
         }
     }
 }
