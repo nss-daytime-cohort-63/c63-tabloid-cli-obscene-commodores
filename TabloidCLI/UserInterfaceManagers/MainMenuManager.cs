@@ -35,8 +35,37 @@ namespace TabloidCLI.UserInterfaceManagers
                 case "7":
                     Console.WriteLine("Color Menu");
                     Console.WriteLine("1) Green");
-                    Console.ReadLine();
-                    Console.BackgroundColor = ConsoleColor.Green;
+                    Console.WriteLine("2) Blue");
+                    Console.WriteLine("3) Red");
+                    Console.WriteLine("4) Magenta");
+                    Console.WriteLine("5) Yellow");
+
+                    Console.WriteLine("Enter the number corresponding to color: ");
+                    int input = Int32.Parse(Console.ReadLine());
+                    
+                    ConsoleColor backgroundColor;
+                    switch (input)
+                    {
+                        case 1:
+                            backgroundColor = ConsoleColor.DarkGreen;
+                            return this;
+                        case 2:
+                            backgroundColor = ConsoleColor.DarkBlue;
+                            return this;
+                        case 3:
+                            backgroundColor = ConsoleColor.DarkRed;
+                            return this;
+                        case 4:
+                            backgroundColor = ConsoleColor.DarkMagenta;
+                            return this;
+                        case 5:
+                            backgroundColor = ConsoleColor.DarkYellow;
+                            return this;
+                        default:
+                            Console.WriteLine("Invalid color choice.");
+                            return this;
+                    }
+                    Console.BackgroundColor = backgroundColor;
                     return this;
                 case "0":
                     Console.WriteLine("Good bye");
