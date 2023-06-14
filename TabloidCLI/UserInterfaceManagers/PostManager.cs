@@ -109,6 +109,7 @@ namespace TabloidCLI.UserInterfaceManagers
         private void Remove()
         {
             List<Post> posts = _postRepository.GetAll();
+            Console.WriteLine("Remove which post(Id)?");
             foreach (Post post in posts)
             {
                 Console.WriteLine($"Id: {post.Id} - {post.Title} by {post.Author.FirstName} {post.Author.LastName}.");
@@ -117,7 +118,39 @@ namespace TabloidCLI.UserInterfaceManagers
             
             
                 _postRepository.Delete(postIdToDelete);
-            
+            Console.WriteLine("Post removed");
+
+        }
+
+        private void Edit()
+        {
+            ;
+            if (authorToEdit == null)
+            {
+                return;
+            }
+
+            Console.WriteLine();
+            Console.Write("New first name (blank to leave unchanged: ");
+            string firstName = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(firstName))
+            {
+                authorToEdit.FirstName = firstName;
+            }
+            Console.Write("New last name (blank to leave unchanged: ");
+            string lastName = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(lastName))
+            {
+                authorToEdit.LastName = lastName;
+            }
+            Console.Write("New bio (blank to leave unchanged: ");
+            string bio = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(bio))
+            {
+                authorToEdit.Bio = bio;
+            }
+
+            _authorRepository.Update(authorToEdit);
         }
     }
 }
