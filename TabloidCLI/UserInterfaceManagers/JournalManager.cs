@@ -7,6 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using TabloidCLI.Repositories;
 using TabloidCLI.Models;
+using System.Windows.Input;
+using Microsoft.VisualBasic;
+using System.Reflection.Metadata.Ecma335;
 
 namespace TabloidCLI.UserInterfaceManagers
 {
@@ -97,7 +100,50 @@ namespace TabloidCLI.UserInterfaceManagers
         private void Edit()
         {
             List();
-            Console.WriteLine();
+            Console.WriteLine("select a journal to edit:");
+            int EditJournal = int.Parse(Console.ReadLine());
+
+            Journal selectJournal = _journalRepository.Get(EditJournal);
+
+            Console.WriteLine($"Current Title:{selectJournal.Title}");
+            Console.WriteLine("Update title");
+            string newTitle = Console.ReadLine();
+            if (!string.IsNullOrEmpty(newTitle))
+            {
+                selectJournal.Title = newTitle;
+            }
+
+            Console.WriteLine($"Current Content:{selectJournal.Content}");
+            Console.WriteLine("Update the Content");
+            string newContent = Console.ReadLine();
+                if (!string.IsNullOrEmpty(newContent)) 
+                {
+                    selectJournal.Content = newContent;
+                }
+                
+
+            Console.WriteLine($"Current DateTime:{selectJournal.CreateDateTime}");
+            Console.WriteLine("update Datetime? Yes or No");
+            string newDate = Console.ReadLine();
+            if (!string.IsNullOrEmpty(newContent))
+            {
+                string value = newDate.ToLower();
+                if (value == "y"){
+                    selectJournal.CreateDateTime = DateTime.Now;
+                }
+                else if (value == "yes") 
+                {
+                    selectJournal.CreateDateTime = DateTime.Now;
+                }
+                else
+                {
+                    
+                  
+                }
+                
+            }
+            _journalRepository.Update(selectJournal);
+
         }
     }
 }
