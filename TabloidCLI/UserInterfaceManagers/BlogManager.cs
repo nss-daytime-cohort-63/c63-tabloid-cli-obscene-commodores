@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TabloidCLI.Repositories;
 using TabloidCLI.Models;
-using System.Data;
-using System.ComponentModel;
 
 namespace TabloidCLI.UserInterfaceManagers
 {
@@ -14,12 +10,14 @@ namespace TabloidCLI.UserInterfaceManagers
     {
         private readonly IUserInterfaceManager _parentUI;
         private BlogRepository _blogRepository;
+        private PostRepository _postRepository;
         private string _connectionString;
 
         public BlogManager(IUserInterfaceManager parentUI, string connectionString)
         {
             _parentUI = parentUI;
             _blogRepository = new BlogRepository(connectionString);
+            _postRepository = new PostRepository(connectionString);
             _connectionString = connectionString;
         }
         public IUserInterfaceManager Execute()
@@ -149,16 +147,23 @@ namespace TabloidCLI.UserInterfaceManagers
                     Console.Write("Remove a tag from this blog : ");
                     break;
                 case 4:
-                    Console.Write("Posts here");
+                    List<Post> posts = _postRepository.GetAll();
+                    List<Post> blogPosts = new List<Post>();
+                    foreach (Post p in posts)
+                    {
+                        if (p.Blog.Id == selBlog.Id)
+                        {
+                            blogPosts.Add(p);
+                        }
+                    }
+                    foreach(Post post in blogPosts)
+                    {
+                        Console.WriteLine($"Title: {post.Title}, Author: {post.Author}, Url: {post.Url}");
+                    }
                     break;
                 case 5:
                     return;
             }
-            //View = Blog title and url displayed
-            //Add Tag
-            //Remove Tag
-            //View Posts
-            //Return
         }
     }
 }
