@@ -31,9 +31,10 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine(" 1) List Journals");
             //Console.WriteLine(" 2) Author Details");
             Console.WriteLine(" 3) Add Journal");
+            
             //Console.WriteLine(" 4) Edit Author");
             Console.WriteLine(" 5) Remove Journal");
-            //Console.WriteLine(" 0) Go Back");
+            Console.WriteLine(" 0) Go Back");
 
             Console.WriteLine("Choose your Journal: ");
             string choice = Console.ReadLine();
@@ -47,9 +48,10 @@ namespace TabloidCLI.UserInterfaceManagers
                     Add();
                     return this;
                 case "5":
-                    
+                    Delete();
                     return this;
-
+                case "0":
+                    return _parentUI;
                 default:
                     Console.WriteLine("Invalid Selection");
                     return this;
@@ -61,7 +63,7 @@ namespace TabloidCLI.UserInterfaceManagers
                 List<Journal> journals = _journalRepository.GetAll();
                 foreach (Journal journal in journals) 
                 {
-                  Console.WriteLine(journal.Title);
+                  Console.WriteLine($"{journal.Id}: {journal.Title}");
                 }
             }
 
@@ -88,6 +90,8 @@ namespace TabloidCLI.UserInterfaceManagers
             List();
             Console.WriteLine("please select a Journal to remove.");
             int selectedJournal = int.Parse(Console.ReadLine());
+
+            _journalRepository.Delete(selectedJournal);
         }
     }
 }
