@@ -42,13 +42,13 @@ namespace TabloidCLI.UserInterfaceManagers
                     List();
                     return this;
                 case "2":
-                    return new PostDetailManager(this,_connectionString, Choose());
+                    return new PostDetailManager(this, _connectionString, Choose());
 
                 case "3":
                     Add();
                     return this;
                 case "4":
-                   Edit();
+                    Edit();
                     return this;
                 case "5":
                     Remove();
@@ -72,7 +72,7 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.Write("Url: ");
             post.Url = Console.ReadLine();
 
-            post.PublishDateTime =  DateTime.Now;
+            post.PublishDateTime = DateTime.Now;
             List<Author> authors = _authorRepository.GetAll();
             foreach (Author author in authors)
             {
@@ -90,10 +90,10 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.Write("BlogId: ");
             int matchingBlogId = int.Parse(Console.ReadLine());
             post.Blog = blogs.Where(b => b.Id == matchingBlogId).FirstOrDefault();
-            
 
 
-           _postRepository.Insert(post);
+
+            _postRepository.Insert(post);
 
             Console.WriteLine("Post added successfully");
         }
@@ -128,9 +128,9 @@ namespace TabloidCLI.UserInterfaceManagers
                 Console.WriteLine($"Id: {post.Id} - {post.Title} by {post.Author.FirstName} {post.Author.LastName}.");
             }
             int postIdToDelete = int.Parse(Console.ReadLine());
-            
-            
-                _postRepository.Delete(postIdToDelete);
+
+
+            _postRepository.Delete(postIdToDelete);
             Console.WriteLine("Post removed");
 
         }
@@ -144,7 +144,7 @@ namespace TabloidCLI.UserInterfaceManagers
                 Console.WriteLine($"Id: {post.Id} - {post.Title} by {post.Author.FirstName} {post.Author.LastName}.");
             }
             int selectedPostId = int.Parse(Console.ReadLine());
-            Post postToEdit = posts.FirstOrDefault(p => p.Id == selectedPostId); 
+            Post postToEdit = posts.FirstOrDefault(p => p.Id == selectedPostId);
             Console.WriteLine();
             Console.Write("New title (blank to leave unchanged: ");
             string title = Console.ReadLine();
@@ -165,7 +165,7 @@ namespace TabloidCLI.UserInterfaceManagers
                 Console.WriteLine($"Id: {author.Id} - {author.FirstName} {author.LastName}");
             }
             string selectedAuthorId = Console.ReadLine();
-            if(!string.IsNullOrWhiteSpace(selectedAuthorId))
+            if (!string.IsNullOrWhiteSpace(selectedAuthorId))
             {
                 int parsedAuthorId = int.Parse(selectedAuthorId);
                 postToEdit.Author = authors.FirstOrDefault(a => a.Id == parsedAuthorId);
