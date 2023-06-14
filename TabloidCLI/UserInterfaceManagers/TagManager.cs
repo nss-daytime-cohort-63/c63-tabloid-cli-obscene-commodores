@@ -117,7 +117,7 @@ namespace TabloidCLI.UserInterfaceManagers
                 tagToEdit.Name = name;
             }
 
-            _tagRepository.Update(tagToEdit)
+            _tagRepository.Update(tagToEdit);
         }
 
         private void Remove()
