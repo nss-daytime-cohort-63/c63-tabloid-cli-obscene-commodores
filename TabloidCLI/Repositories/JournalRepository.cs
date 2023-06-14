@@ -16,7 +16,18 @@ namespace TabloidCLI.Repositories
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand()) 
+                {
+                    cmd.CommandText = @"Delete from Journal where Id = @id";
+                    cmd.Parameters.AddWithValue("id", id);
+                    cmd.ExecuteNonQuery();
+                    Console.WriteLine("journal deleted");
+                
+                }
+            }
         }
 
         public Journal Get(int id)
