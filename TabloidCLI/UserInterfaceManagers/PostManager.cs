@@ -42,8 +42,8 @@ namespace TabloidCLI.UserInterfaceManagers
                     List();
                     return this;
                 case "2":
-                    return this;
-                   
+                    return new PostDetailManager(this,_connectionString, Choose());
+
                 case "3":
                     Add();
                     return this;
@@ -104,6 +104,19 @@ namespace TabloidCLI.UserInterfaceManagers
             {
                 Console.WriteLine($"{post.Title} from {post.Url} by {post.Author.FirstName} {post.Author.LastName} on the {post.Blog.Title} blog.");
             }
+        }
+
+        private Post Choose()
+        {
+            List<Post> posts = _postRepository.GetAll();
+            Console.WriteLine("Details on which post(Id)?");
+            foreach (Post post in posts)
+            {
+                Console.WriteLine($"Id: {post.Id} - {post.Title} by {post.Author.FirstName} {post.Author.LastName}.");
+            }
+            int postId = int.Parse(Console.ReadLine());
+            Post chosenPost = posts.FirstOrDefault(p => p.Id == postId);
+            return chosenPost;
         }
 
         private void Remove()
