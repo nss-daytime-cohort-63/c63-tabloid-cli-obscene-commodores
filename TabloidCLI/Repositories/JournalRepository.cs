@@ -38,6 +38,7 @@ namespace TabloidCLI.Repositories
                 using (SqlCommand command = conn.CreateCommand())
                 {
                     command.CommandText = @"select * from Journal where Id = @id";
+                    command.Parameters.AddWithValue("@id", id);
                     SqlDataReader reader = command.ExecuteReader();
 
                     Journal journal = new Journal();

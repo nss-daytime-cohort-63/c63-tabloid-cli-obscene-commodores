@@ -35,11 +35,11 @@ namespace TabloidCLI.UserInterfaceManagers
             //Console.WriteLine(" 2) Author Details");
             Console.WriteLine(" 3) Add Journal");
             
-            //Console.WriteLine(" 4) Edit Author");
+            Console.WriteLine(" 4) Edit Journal");
             Console.WriteLine(" 5) Remove Journal");
             Console.WriteLine(" 0) Go Back");
 
-            Console.WriteLine("Choose your Journal: ");
+            Console.WriteLine("Choose your Option: ");
             string choice = Console.ReadLine();
 
             switch (choice)
@@ -49,6 +49,9 @@ namespace TabloidCLI.UserInterfaceManagers
                     return this;
                 case "3":
                     Add();
+                    return this;
+                case "4":
+                    Edit(); 
                     return this;
                 case "5":
                     Delete();
@@ -108,7 +111,7 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine($"Current Title:{selectJournal.Title}");
             Console.WriteLine("Update title");
             string newTitle = Console.ReadLine();
-            if (!string.IsNullOrEmpty(newTitle))
+            if (!string.IsNullOrWhiteSpace(newTitle))
             {
                 selectJournal.Title = newTitle;
             }
@@ -116,34 +119,14 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine($"Current Content:{selectJournal.Content}");
             Console.WriteLine("Update the Content");
             string newContent = Console.ReadLine();
-                if (!string.IsNullOrEmpty(newContent)) 
+                if (!string.IsNullOrWhiteSpace(newContent)) 
                 {
                     selectJournal.Content = newContent;
                 }
-                
-
-            Console.WriteLine($"Current DateTime:{selectJournal.CreateDateTime}");
-            Console.WriteLine("update Datetime? Yes or No");
-            string newDate = Console.ReadLine();
-            if (!string.IsNullOrEmpty(newContent))
-            {
-                string value = newDate.ToLower();
-                if (value == "y"){
-                    selectJournal.CreateDateTime = DateTime.Now;
-                }
-                else if (value == "yes") 
-                {
-                    selectJournal.CreateDateTime = DateTime.Now;
-                }
-                else
-                {
-                    
-                  
-                }
-                
-            }
+                            
+            
             _journalRepository.Update(selectJournal);
-
+            Console.WriteLine($"journal {selectJournal.Id} has been updated");
         }
     }
 }
