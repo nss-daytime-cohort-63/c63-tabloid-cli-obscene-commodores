@@ -130,6 +130,7 @@ namespace TabloidCLI.Repositories
             }
         }
 
+
         public void Insert(Post post)
         {
             using (SqlConnection conn = Connection)
@@ -168,7 +169,7 @@ namespace TabloidCLI.Repositories
                     cmd.Parameters.AddWithValue("@url", post.Url);
                     cmd.Parameters.AddWithValue("@authorId", post.Author.Id);
                     cmd.Parameters.AddWithValue("@blogId", post.Blog.Id);
-
+                    cmd.Parameters.AddWithValue("@id", post.Id);
                     cmd.ExecuteNonQuery();
                 }
             }
