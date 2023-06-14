@@ -93,5 +93,11 @@ namespace TabloidCLI.UserInterfaceManagers
 
             _journalRepository.Delete(selectedJournal);
         }
+
+        private void Edit()
+        {
+            List();
+            Console.WriteLine();
+        }
     }
 }
