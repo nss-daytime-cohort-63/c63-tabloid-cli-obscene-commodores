@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TabloidCLI.Repositories;
 using TabloidCLI.Models;
 using System.Data;
+using System.ComponentModel;
 
 namespace TabloidCLI.UserInterfaceManagers
 {
@@ -28,6 +29,7 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine(" 2) Add a Blog");
             Console.WriteLine(" 3) Delete a Blog");
             Console.WriteLine(" 4) Edit a Blog");
+            Console.WriteLine(" 5) View Blog Details");
             Console.WriteLine(" 0) Go back");
 
             Console.Write("> ");
@@ -45,6 +47,9 @@ namespace TabloidCLI.UserInterfaceManagers
                     return this;
                 case "4":
                     EditBlog();
+                    return this;
+                case "5":
+                    BlogDetails();
                     return this;
                 case "0":
                     return _parentUI;
@@ -92,12 +97,68 @@ namespace TabloidCLI.UserInterfaceManagers
             Blog updatedBlog = blogList.FirstOrDefault(blog => blog.Id == updateId);
             Console.Write("Update the Title");
             string updatedBlogTitle = Console.ReadLine();
-            Console.Write("Update the Url");
-            string updateBlogUrl = Console.ReadLine();
+            while(string.IsNullOrEmpty(updatedBlogTitle))
+            {
+                Console.WriteLine("Invalid Entry");
+                Console.Write("Update the Title");
+                updatedBlogTitle = Console.ReadLine();
+            }
+            Console.Write("Update the Url : ");
+            string updatedBlogUrl = Console.ReadLine();
+            while (string.IsNullOrEmpty(updatedBlogUrl))
+            {
+                Console.WriteLine("Invalid Entry");
+                Console.Write("Update the Url : ");
+                updatedBlogUrl = Console.ReadLine();
+            }
             updatedBlog.Title = updatedBlogTitle;
-            updatedBlog.Url = updateBlogUrl;
+            updatedBlog.Url = updatedBlogUrl;
             _blogRepository.Update(updatedBlog);
             Console.WriteLine("Your blog has been successfully updated.");
+        }
+        private void BlogDetails()
+        {
+            List<Blog> blogs = _blogRepository.GetAll();
+            foreach (Blog b in blogs)
+            {
+                Console.WriteLine($" {b.Id}) {b.Title}");
+            }
+            Console.Write("Select a blog to view in more detail : ");
+            int selBlogId = Int32.Parse(Console.ReadLine());
+            Blog selBlog = blogs.FirstOrDefault(b => b.Id == selBlogId);
+            Console.WriteLine($"{selBlog.Title} : {selBlog.Url}");
+            List<string> detailOptions = new List<string>
+            {
+                "View", "Add Tag", "Remove Tag", "View Posts", "Return"
+            };
+            for (int i = 0; i < detailOptions.Count; i++)
+            {
+                Console.WriteLine($" {i + 1} ) {detailOptions[i]}");
+            }
+            Console.Write("Select an option : ");
+            int select = Int32.Parse(Console.ReadLine());
+            switch (select)
+            {
+                case 1:
+                    Console.WriteLine($"{selBlog.Title} : {selBlog.Url}");
+                    break;
+                case 2:
+                    Console.Write("Add a tag to this blog : ");
+                    break;
+                case 3:
+                    Console.Write("Remove a tag from this blog : ");
+                    break;
+                case 4:
+                    Console.Write("Posts here");
+                    break;
+                case 5:
+                    return;
+            }
+            //View = Blog title and url displayed
+            //Add Tag
+            //Remove Tag
+            //View Posts
+            //Return
         }
     }
 }
