@@ -1,70 +1,56 @@
-/*using System;
-using System.Collections.Generic;
-using TabloidCLI.Models;
-
+using System;
 
 namespace TabloidCLI.UserInterfaceManagers
 {
-	public class ColorManager : IUserInterfaceManager
-	{
-		private readonly IUserInterfaceManager _parentUI;
-		private AuthorRepository _authorRepository;
-		private string ConnectionString;
-	
+    public class ColorManager : IUserInterfaceManager
+    {
+        private MainMenuManager mainMenuManager;
+        private string cONNECTION_STRING;
+        private readonly IUserInterfaceManager _parentUI;
 
-        public ColorManager()
-		{
-				
-		}
-        public string SelectedColor() 
-		{
-			Console.WriteLine("Color Menu");
-			Console.WriteLine("1) Blue");
-			Console.WriteLine("2) Black");
-			Console.WriteLine("3) Cyan");
-			Console.WriteLine("4) Dark Blue");
-			Console.WriteLine("5) Dark Cyan");
-			Console.WriteLine("6) Dark Gray");
-			Console.WriteLine("7) Dark Green");
-			Console.WriteLine("8) Dark Magenta");
-			Console.WriteLine("9) Dark Red");
-			Console.WriteLine("10) Dark Yellow");
-			Console.WriteLine("11) Gray");
-			Console.WriteLine("12) Green");
-			Console.WriteLine("13) Magenta");
-			Console.WriteLine("14) Red");
-			Console.WriteLine("15) White");
-			Console.WriteLine("16) Yellow");
-
-			Console.Write("> ");
-			string choice = Console.ReadLine();
-			switch (choice)
-			{
-				case "1":
-					newColor.BackgroundColor = Blue;
-					Console.BackgroundColor = ConsoleColor.Blue;
-					string choice2 = "";
-                    return choice2;
-				case "2":
-					Console.BackgroundColor = BackgroundColor.Blue
-					return this;
-				case "3":
-					return this;
-				case "4":
-					return this;
-				case "5":
-					return this;
-				case "0":
-					return _parentUI;
-				default:
-					string invalid = "Invalid Selection";
-					return invalid;
-			}
-		}
+        public ColorManager(IUserInterfaceManager parentUI, string cONNECTION_STRING)
+        {
+            _parentUI = parentUI;
+            /* this.mainMenuManager = mainMenuManager;*/
+            this.cONNECTION_STRING = cONNECTION_STRING;
+        }
 
         public IUserInterfaceManager Execute()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Color Menu");
+            Console.WriteLine("1) Green");
+            Console.WriteLine("2) Blue");
+            Console.WriteLine("3) Red");
+            Console.WriteLine("4) Magenta");
+            Console.WriteLine("5) Yellow");
+            Console.WriteLine("0) Return to menu");
+
+            Console.WriteLine("Enter the number corresponding to color: ");
+            int input = Int32.Parse(Console.ReadLine());
+
+            switch (input)
+            {
+                case 1:
+                    Console.BackgroundColor = ConsoleColor.DarkGreen;
+                    return this;
+                case 2:
+                    Console.BackgroundColor = ConsoleColor.DarkBlue;
+                    return this;
+                case 3:
+                    Console.BackgroundColor = ConsoleColor.DarkRed;
+                    return this;
+                case 4:
+                    Console.BackgroundColor = ConsoleColor.DarkMagenta;
+                    return this;
+                case 5:
+                    Console.BackgroundColor = ConsoleColor.DarkYellow;
+                    return this;
+                case 0:
+                    return _parentUI;
+                default:
+                    Console.WriteLine("Invalid color choice.");
+                    return this;
+            }
         }
     }
-}*/
+}
