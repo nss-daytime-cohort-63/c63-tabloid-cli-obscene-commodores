@@ -1,4 +1,4 @@
-using System;
+/*using System;
 using System.Collections.Generic;
 using TabloidCLI.Models;
 
@@ -6,11 +6,11 @@ using TabloidCLI.Models;
 namespace TabloidCLI.UserInterfaceManagers
 {
 	public class ColorManager : IUserInterfaceManager
-    {
-        private readonly IUserInterfaceManager _parentUI;
-        private AuthorRepository _authorRepository;
-        private string ConnectionString;
 	{
+		private readonly IUserInterfaceManager _parentUI;
+		private AuthorRepository _authorRepository;
+		private string ConnectionString;
+	
 
         public ColorManager()
 		{
@@ -19,8 +19,8 @@ namespace TabloidCLI.UserInterfaceManagers
         public string SelectedColor() 
 		{
 			Console.WriteLine("Color Menu");
-			Console.WriteLine("1) Black");
-			Console.WriteLine("2) Blue");
+			Console.WriteLine("1) Blue");
+			Console.WriteLine("2) Black");
 			Console.WriteLine("3) Cyan");
 			Console.WriteLine("4) Dark Blue");
 			Console.WriteLine("5) Dark Cyan");
@@ -41,11 +41,11 @@ namespace TabloidCLI.UserInterfaceManagers
 			switch (choice)
 			{
 				case "1":
-					/*newColor.BackgroundColor = Blue;*/
+					newColor.BackgroundColor = Blue;
 					Console.BackgroundColor = ConsoleColor.Blue;
 					string choice2 = "";
                     return choice2;
-				/*case "2":
+				case "2":
 					Console.BackgroundColor = BackgroundColor.Blue
 					return this;
 				case "3":
@@ -53,7 +53,7 @@ namespace TabloidCLI.UserInterfaceManagers
 				case "4":
 					return this;
 				case "5":
-					return this;*/
+					return this;
 				case "0":
 					return _parentUI;
 				default:
@@ -67,4 +67,4 @@ namespace TabloidCLI.UserInterfaceManagers
             throw new NotImplementedException();
         }
     }
-}
+}*/

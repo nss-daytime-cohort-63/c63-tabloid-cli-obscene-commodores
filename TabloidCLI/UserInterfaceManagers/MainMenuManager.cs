@@ -33,9 +33,11 @@ namespace TabloidCLI.UserInterfaceManagers
                 case "5": return new TagManager(this, CONNECTION_STRING);
                 case "6": return new SearchManager(this, CONNECTION_STRING);
                 case "7":
-                    ColorManager newColor = new ColorManager();
-                    newColor.SelectedColor();
-                    return null;
+                    Console.WriteLine("Color Menu");
+                    Console.WriteLine("1) Green");
+                    Console.ReadLine();
+                    Console.BackgroundColor = ConsoleColor.Green;
+                    return this;
                 case "0":
                     Console.WriteLine("Good bye");
                     return null;
