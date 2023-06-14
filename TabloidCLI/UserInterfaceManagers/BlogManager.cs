@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TabloidCLI.Repositories;
 using TabloidCLI.Models;
-
+using System.Data;
 
 namespace TabloidCLI.UserInterfaceManagers
 {
@@ -27,6 +27,7 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine(" 1) List Blogs");
             Console.WriteLine(" 2) Add a Blog");
             Console.WriteLine(" 3) Delete a Blog");
+            Console.WriteLine(" 4) Edit a Blog");
             Console.WriteLine(" 0) Go back");
 
             Console.Write("> ");
@@ -41,6 +42,9 @@ namespace TabloidCLI.UserInterfaceManagers
                     return this;
                 case "3":
                     DeleteBlog();
+                    return this;
+                case "4":
+                    EditBlog();
                     return this;
                 case "0":
                     return _parentUI;
@@ -75,6 +79,25 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.Write("Enter Blog Id to Delete: ");
             int delBlogId = Int32.Parse(Console.ReadLine());
             _blogRepository.Delete(delBlogId);
+        }
+        private void EditBlog()
+        {
+            List<Blog> blogList = _blogRepository.GetAll();
+            foreach (Blog b in blogList)
+            {
+                Console.WriteLine($" {b.Id}) {b.Title}");
+            }
+            Console.Write("Which blog would you like to edit? : ");
+            int updateId = Int32.Parse(Console.ReadLine());
+            Blog updatedBlog = blogList.FirstOrDefault(blog => blog.Id == updateId);
+            Console.Write("Update the Title");
+            string updatedBlogTitle = Console.ReadLine();
+            Console.Write("Update the Url");
+            string updateBlogUrl = Console.ReadLine();
+            updatedBlog.Title = updatedBlogTitle;
+            updatedBlog.Url = updateBlogUrl;
+            _blogRepository.Update(updatedBlog);
+            Console.WriteLine("Your blog has been successfully updated.");
         }
     }
 }
