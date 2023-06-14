@@ -51,7 +51,7 @@ namespace TabloidCLI.UserInterfaceManagers
                    // Edit();
                     return this;
                 case "5":
-                    //Remove();
+                    Remove();
                     return this;
                 case "0":
                     return _parentUI;
@@ -106,5 +106,18 @@ namespace TabloidCLI.UserInterfaceManagers
             }
         }
 
+        private void Remove()
+        {
+            List<Post> posts = _postRepository.GetAll();
+            foreach (Post post in posts)
+            {
+                Console.WriteLine($"Id: {post.Id} - {post.Title} by {post.Author.FirstName} {post.Author.LastName}.");
+            }
+            int postIdToDelete = int.Parse(Console.ReadLine());
+            
+            
+                _postRepository.Delete(postIdToDelete);
+            
+        }
     }
 }
