@@ -30,7 +30,7 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine(" 2) Add tag");
             Console.WriteLine(" 3) Remove tag");
             Console.WriteLine(" 4) Manage Notes");
-            
+
             Console.WriteLine(" 0) Go Back");
 
             Console.Write("> ");
@@ -38,7 +38,7 @@ namespace TabloidCLI.UserInterfaceManagers
             switch (choice)
             {
                 case "1":
-                   View();
+                    View();
                     return this;
                 case "2":
                     //AddTag();
@@ -47,7 +47,7 @@ namespace TabloidCLI.UserInterfaceManagers
                     //RemoveTag();
                     return this;
                 case "4":
-                   // ManageNotes();
+                    // ManageNotes();
                     return this;
                 case "0":
                     return _parentUI;
@@ -63,7 +63,7 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine($"Url: {post.Url}");
             Console.WriteLine($"Author: {post.Author.FullName}");
             Console.WriteLine($"Blog: {post.Blog.Title}");
-            
+
         }
     }
 }
