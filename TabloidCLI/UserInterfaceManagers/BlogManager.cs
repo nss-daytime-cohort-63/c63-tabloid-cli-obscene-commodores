@@ -11,15 +11,22 @@ namespace TabloidCLI.UserInterfaceManagers
         private readonly IUserInterfaceManager _parentUI;
         private BlogRepository _blogRepository;
         private PostRepository _postRepository;
+        private TagRepository _tagRepository;
         private string _connectionString;
+        private int _blogId;
+
+        public MainMenuManager MainMenuManager { get; }
+        public string CONNECTION_STRING { get; }
 
         public BlogManager(IUserInterfaceManager parentUI, string connectionString)
         {
             _parentUI = parentUI;
             _blogRepository = new BlogRepository(connectionString);
             _postRepository = new PostRepository(connectionString);
+            _tagRepository = new TagRepository(connectionString);
             _connectionString = connectionString;
         }
+
         public IUserInterfaceManager Execute()
         {
             Console.WriteLine("Blog Menu");
@@ -142,6 +149,30 @@ namespace TabloidCLI.UserInterfaceManagers
                     break;
                 case 2:
                     Console.Write("Add a tag to this blog : ");
+                    Blog blog = _blogRepository.Get(_blogId);
+
+                    Console.WriteLine($"Which tag would you like to add to {selBlog.Title}?");
+                    List<Tag> tags = _tagRepository.GetAll();
+
+                    for (int i = 0; i < tags.Count; i++)
+                    {
+                        Tag tag = tags[i];
+                        Console.WriteLine($" {i + 1}) {tag.Name}");
+                    }
+                    Console.Write("> ");
+
+                    string input = Console.ReadLine();
+                    try
+                    {
+                        int choice = int.Parse(input);
+                        Tag tag = tags[choice - 1];
+                        _blogRepository.InsertTag(selBlog, tag);
+                        Console.WriteLine("Tag Added!");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Invalid Selection. Won't add any tags.");
+                    }
                     break;
                 case 3:
                     Console.Write("Remove a tag from this blog : ");
