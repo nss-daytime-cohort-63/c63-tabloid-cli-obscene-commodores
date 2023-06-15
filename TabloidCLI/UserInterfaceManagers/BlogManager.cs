@@ -147,20 +147,19 @@ namespace TabloidCLI.UserInterfaceManagers
                 case 1:
                     Console.WriteLine($"{selBlog.Title} : {selBlog.Url}");
                     Console.Write("Tags:  ");
-                    if (post.Tags.Count == 0)
+                    if (selBlog.Tags.Count == 0)
                     {
                         Console.Write("None");
                         Console.WriteLine();
                     }
                     else
                     {
-                        foreach (Tag tag in post.Tags)
+                        foreach (Tag tag in selBlog.Tags)
                         {
                             Console.Write($"{tag}  ");
                             Console.WriteLine();
                         }
                     }
-            
             break;
                 case 2:
                     Console.Write("Add a tag to this blog : ");
