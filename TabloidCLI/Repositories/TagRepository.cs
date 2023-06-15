@@ -186,8 +186,7 @@ namespace TabloidCLI
                             Title = reader.GetString(reader.GetOrdinal("Title")),
                             Url = reader.GetString(reader.GetOrdinal("URL")),
                             PublishDateTime = reader.GetDateTime(reader.GetOrdinal("PublishDateTime")),
-                            //AuthorId = reader.GetInt32(reader.GetOrdinal("AuthorId")),
-                            //BlogId = reader.GetInt32(reader.GetOrdinal("BlogId")),
+                            
                         };
                         result.Add(postObj);
                     }

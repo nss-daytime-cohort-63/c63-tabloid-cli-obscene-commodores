@@ -1,5 +1,6 @@
 ﻿using System;
 using TabloidCLI.Models;
+using System.Collections.Generic;
 
 namespace TabloidCLI.UserInterfaceManagers
 {
@@ -37,6 +38,7 @@ namespace TabloidCLI.UserInterfaceManagers
                     SearchPosts();
                     return this;
                 case "4":
+                    SearchAll();
                     return this;
                 case "0":
                     return _parentUI;
@@ -97,6 +99,41 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void SearchAll()
         {
+            Console.WriteLine("Tag> ");
+            string tagName = Console.ReadLine();
+
+            SearchResults<Post> postResult = _tagRepository.SearchPost(tagName);
+            SearchResults<Author> authorResult = _tagRepository.SearchAuthors(tagName);
+            SearchResults<Blog> blogResult = _tagRepository.SearchBlog(tagName);
+
+            if (postResult.NoResultsFound)
+            {
+                Console.WriteLine($"no post results for {tagName}");
+            }
+            else
+            {
+                postResult.Title = "Post Search Results";
+                postResult.Display();
+            }
+            if (authorResult.NoResultsFound)
+            {
+                Console.WriteLine($"no author results for {tagName}");
+            }
+            else
+            {
+                authorResult.Title = "Author Search Results";
+                authorResult.Display();
+            }
+
+            if (blogResult.NoResultsFound)
+            {
+                Console.WriteLine($"no blog results for {tagName}");
+            }
+            else
+            {
+                blogResult.Title = "Blog Search Results";
+                blogResult.Display();
+            }
 
         }
     }
