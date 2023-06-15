@@ -46,7 +46,7 @@ namespace TabloidCLI.UserInterfaceManagers
                     AddTag();
                     return this;
                 case "3":
-                    //RemoveTag();
+                    RemoveTag();
                     return this;
                 case "4":
                     return new NoteManager(this, _connectionString, post);
@@ -102,6 +102,31 @@ namespace TabloidCLI.UserInterfaceManagers
             catch (Exception ex)
             {
                 Console.WriteLine("Invalid Selection. Won't add any tags.");
+            }
+        }
+
+        private void RemoveTag()
+        {
+            Console.WriteLine($"Which tag would you like to remove from {_post.Title}?");
+            List<Tag> tags = _post.Tags;
+
+            for (int i = 0; i < tags.Count; i++)
+            {
+                Tag tag = tags[i];
+                Console.WriteLine($" {i + 1}) {tag.Name}");
+            }
+            Console.Write("> ");
+
+            string input = Console.ReadLine();
+            try
+            {
+                int choice = int.Parse(input);
+                Tag tag = tags[choice - 1];
+                _postRepository.DeleteTag(_post.Id, tag.Id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Invalid Selection. Won't remove any tags.");
             }
         }
     }
