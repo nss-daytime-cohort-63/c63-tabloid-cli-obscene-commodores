@@ -26,7 +26,37 @@ namespace TabloidCLI.Repositories
 
         public List<Note> GetAll()
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT Title, CreateDateTime, Content FROM Note";
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        List<Note> notes = new List<Note>();
+                        while (reader.Read())
+                        {
+                            int TitleColumn = reader.GetOrdinal("Title");
+                            int CreateDateTimeColumn = reader.GetOrdinal("CreateDateTime");
+                            int ContentColumn = reader.GetOrdinal("Content");
+
+                            string TitleValue = reader.GetString(TitleColumn);
+                            DateTime CreateDateTimeValue = reader.GetDateTime(CreateDateTimeColumn);
+                            string ContentValue = reader.GetString(ContentColumn);
+
+                            Note note = new Note()
+                            {
+                                Title = TitleValue,
+                                CreateDateTime = CreateDateTimeValue,
+                                Content = ContentValue
+                            };
+                            notes.Add(note);
+                        }
+                        return notes;
+                    }
+                }
+            }
         }
 
         public void Insert(Note entry)

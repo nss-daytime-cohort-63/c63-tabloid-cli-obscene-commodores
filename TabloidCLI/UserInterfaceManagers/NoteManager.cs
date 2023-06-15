@@ -39,7 +39,7 @@ namespace TabloidCLI.UserInterfaceManagers
             switch (selection)
             {
                 case 1:
-                    Console.WriteLine("List notes here");
+                    ListNotes();
                     return this;
                 case 2:
                     AddNote();
@@ -69,6 +69,15 @@ namespace TabloidCLI.UserInterfaceManagers
                 PostId = _post.Id
             };
             _noteRepository.Insert(newNote);
+        }
+        public void ListNotes()
+        {
+            List<Note> listedNotes = _noteRepository.GetAll();
+            foreach (Note n in listedNotes)
+            {
+                Console.WriteLine(@$"Title: {n.Title}, Time: {n.CreateDateTime}
+                                    Content: {n.Content}");
+            }
         }
     }
 }
