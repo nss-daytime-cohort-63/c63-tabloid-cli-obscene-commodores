@@ -65,7 +65,7 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine($"Author: {post.Author.FullName}");
             Console.WriteLine($"Blog: {post.Blog.Title}");
             Console.Write("Tags:  ");
-            if (post.Tags == null)
+            if (post.Tags.Count == 0)
             {
                 Console.Write("None");
                 Console.WriteLine();
