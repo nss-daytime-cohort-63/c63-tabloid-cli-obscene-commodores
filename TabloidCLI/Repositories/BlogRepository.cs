@@ -106,8 +106,8 @@ namespace TabloidCLI.Repositories
                                 Url = reader.GetString(reader.GetOrdinal("BlogUrl")),
                                 Tags = new List<Tag>()
                             };
+                            blogs.Add(blogMatch);
                         }
-                        blogs.Add(blogMatch);
                         if (!reader.IsDBNull(reader.GetOrdinal("TagId")))
                         {
                             blogMatch.Tags.Add(new Tag()
