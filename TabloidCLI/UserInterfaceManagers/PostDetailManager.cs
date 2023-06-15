@@ -49,7 +49,7 @@ namespace TabloidCLI.UserInterfaceManagers
                     //RemoveTag();
                     return this;
                 case "4":
-                    return new NoteManager(this, _connectionString);
+                    return new NoteManager(this, _connectionString, post);
                 case "0":
                     return _parentUI;
                 default:
@@ -64,7 +64,20 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine($"Url: {post.Url}");
             Console.WriteLine($"Author: {post.Author.FullName}");
             Console.WriteLine($"Blog: {post.Blog.Title}");
-
+            Console.Write("Tags:  ");
+            if (post.Tags.Count == 0)
+            {
+                Console.Write("None");
+                Console.WriteLine();
+            }
+            else
+            {
+                foreach (Tag tag in post.Tags)
+                {
+                    Console.Write($"{tag}  ");
+                    Console.WriteLine();
+                }
+            }
         }
     }
 }
