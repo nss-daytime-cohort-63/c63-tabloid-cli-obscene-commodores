@@ -27,7 +27,7 @@ namespace TabloidCLI.UserInterfaceManagers
         public IUserInterfaceManager Execute()
         {
             Post post = _post;
-            Console.WriteLine($"{post.Title} Details");
+             Console.WriteLine($"{post.Title} Details");
             Console.WriteLine(" 1) View");
             Console.WriteLine(" 2) Add tag");
             Console.WriteLine(" 3) Remove tag");
