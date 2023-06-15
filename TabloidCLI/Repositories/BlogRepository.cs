@@ -10,9 +10,7 @@ namespace TabloidCLI.Repositories
 {
     internal class BlogRepository : DatabaseConnector, IRepository<Blog>
     {
-        public BlogRepository(string connectionString) : base(connectionString)
-        {
-        }
+        public BlogRepository(string connectionString) : base(connectionString) { }
 
         public void Delete(int id)
         {
@@ -30,7 +28,51 @@ namespace TabloidCLI.Repositories
 
         public Blog Get(int id)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT b.Id AS BlogId,
+                                               b.Title,
+                                               t.Id AS TagId,
+                                               t.Name
+                                          FROM Blog b 
+                                               LEFT JOIN BlogTag bt on b.Id = bt.BlogId
+                                               LEFT JOIN Tag t on t.Id = bt.TagId
+                                         WHERE b.id = @id";
+
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    Blog blog = null;
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        if (blog == null)
+                        {
+                            blog = new Blog()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("BlogId")),
+                                Title = reader.GetString(reader.GetOrdinal("Title")),
+                            };
+                        }
+
+                        if (!reader.IsDBNull(reader.GetOrdinal("TagId")))
+                        {
+                            blog.Tags.Add(new Tag()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("TagId")),
+                                Name = reader.GetString(reader.GetOrdinal("Name")),
+                            });
+                        }
+                    }
+
+                    reader.Close();
+
+                    return blog;
+                }
+            }
         }
 
         public List<Blog> GetAll()
@@ -101,7 +143,7 @@ namespace TabloidCLI.Repositories
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"INSERT INTO AuthorTag (BlogId, TagId)
+                    cmd.CommandText = @"INSERT INTO BlogTag (BlogId, TagId)
                                                        VALUES (@blogId, @tagId)";
                     cmd.Parameters.AddWithValue("@blogId", blog.Id);
                     cmd.Parameters.AddWithValue("@tagId", tag.Id);

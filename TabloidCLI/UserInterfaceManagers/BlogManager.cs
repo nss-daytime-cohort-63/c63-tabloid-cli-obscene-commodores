@@ -14,22 +14,17 @@ namespace TabloidCLI.UserInterfaceManagers
         private TagRepository _tagRepository;
         private string _connectionString;
         private int _blogId;
-        private MainMenuManager mainMenuManager;
-        private string cONNECTION_STRING;
 
-        public BlogManager(IUserInterfaceManager parentUI, string connectionString, int blogId)
+        public MainMenuManager MainMenuManager { get; }
+        public string CONNECTION_STRING { get; }
+
+        public BlogManager(IUserInterfaceManager parentUI, string connectionString)
         {
             _parentUI = parentUI;
             _blogRepository = new BlogRepository(connectionString);
             _postRepository = new PostRepository(connectionString);
+            _tagRepository = new TagRepository(connectionString);
             _connectionString = connectionString;
-            _blogId = blogId;
-        }
-
-        public BlogManager(MainMenuManager mainMenuManager, string cONNECTION_STRING)
-        {
-            this.mainMenuManager = mainMenuManager;
-            this.cONNECTION_STRING = cONNECTION_STRING;
         }
 
         public IUserInterfaceManager Execute()
@@ -156,7 +151,7 @@ namespace TabloidCLI.UserInterfaceManagers
                     Console.Write("Add a tag to this blog : ");
                     Blog blog = _blogRepository.Get(_blogId);
 
-                    Console.WriteLine($"Which tag would you like to add to {blog.Title}?");
+                    Console.WriteLine($"Which tag would you like to add to {selBlog.Title}?");
                     List<Tag> tags = _tagRepository.GetAll();
 
                     for (int i = 0; i < tags.Count; i++)
@@ -171,7 +166,8 @@ namespace TabloidCLI.UserInterfaceManagers
                     {
                         int choice = int.Parse(input);
                         Tag tag = tags[choice - 1];
-                        _blogRepository.InsertTag(blog, tag);
+                        _blogRepository.InsertTag(selBlog, tag);
+                        Console.WriteLine("Tag Added!");
                     }
                     catch (Exception ex)
                     {
