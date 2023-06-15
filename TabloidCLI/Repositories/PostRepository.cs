@@ -27,8 +27,8 @@ namespace TabloidCLI.Repositories
                                                LastName,
                                                Bio,
                                                Blog.Title AS BlogTitle,
-                                               Blog.Url AS BlogUrl
-                                               Tag.Name AS TagName
+                                               Blog.Url AS BlogUrl,
+                                               Tag.Name AS TagName,
                                                Tag.Id AS TagId
                                           FROM Post
                                           JOIN Author ON Author.Id = Post.AuthorId
@@ -72,7 +72,7 @@ namespace TabloidCLI.Repositories
                             postMatch.Tags.Add(new Tag()
                             {
                                 Id = reader.GetInt32(reader.GetOrdinal("TagId")),
-                                Name = reader.GetString(reader.GetOrdinal("Name"))
+                                Name = reader.GetString(reader.GetOrdinal("TagName"))
                             });
                         }
                     }
