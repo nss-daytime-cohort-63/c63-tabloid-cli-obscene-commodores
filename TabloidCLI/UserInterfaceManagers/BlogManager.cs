@@ -146,7 +146,22 @@ namespace TabloidCLI.UserInterfaceManagers
             {
                 case 1:
                     Console.WriteLine($"{selBlog.Title} : {selBlog.Url}");
-                    break;
+                    Console.Write("Tags:  ");
+                    if (post.Tags.Count == 0)
+                    {
+                        Console.Write("None");
+                        Console.WriteLine();
+                    }
+                    else
+                    {
+                        foreach (Tag tag in post.Tags)
+                        {
+                            Console.Write($"{tag}  ");
+                            Console.WriteLine();
+                        }
+                    }
+            
+            break;
                 case 2:
                     Console.Write("Add a tag to this blog : ");
                     Blog blog = _blogRepository.Get(_blogId);
@@ -187,9 +202,11 @@ namespace TabloidCLI.UserInterfaceManagers
                             blogPosts.Add(p);
                         }
                     }
-                    foreach(Post post in blogPosts)
+                    foreach (Post post in blogPosts)
                     {
-                        Console.WriteLine($"Title: {post.Title}, Author: {post.Author}, Url: {post.Url}");
+                        Console.WriteLine($"Title: {post.Title}");
+                        Console.WriteLine($"Author: {post.Author}");
+                        Console.WriteLine($"Url: {post.Url}");
                     }
                     break;
                 case 5:
