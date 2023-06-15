@@ -82,24 +82,46 @@ namespace TabloidCLI.Repositories
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT Id, Title, Url FROM Blog";
+                    cmd.CommandText = @"SELECT Blog.Id AS BlogId,
+                                               Blog.Title AS BlogTitle,
+                                               Blog.Url AS BlogUrl,
+                                               Tag.Name AS TagName,
+                                               Tag.Id AS TagId
+                                          FROM Blog
+                                          LEFT JOIN BlogTag ON BlogTag.BlogId = Blog.Id
+                                          LEFT JOIN Tag ON BlogTag.TagId = Tag.Id";
+
                     List<Blog> blogs = new List<Blog>();
+
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        Blog blog = new Blog()
+                        Blog blogMatch = blogs.FirstOrDefault(b => b.Id == reader.GetInt32(reader.GetOrdinal("BlogId")));
+                        if (blogMatch == null)
                         {
-                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                            Title = reader.GetString(reader.GetOrdinal("Title")),
-                            Url = reader.GetString(reader.GetOrdinal("Url")),
-                        };
-                        blogs.Add(blog);
+                            blogMatch = new Blog()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("BlogId")),
+                                Title = reader.GetString(reader.GetOrdinal("BlogTitle")),
+                                Url = reader.GetString(reader.GetOrdinal("BlogUrl")),
+                                Tags = new List<Tag>()
+                            };
+                        }
+                        blogs.Add(blogMatch);
+                        if (!reader.IsDBNull(reader.GetOrdinal("TagId")))
+                        {
+                            blogMatch.Tags.Add(new Tag()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("TagId")),
+                                Name = reader.GetString(reader.GetOrdinal("TagName"))
+                            });
+                        }
                     }
-                    return blogs;
+                reader.Close();
+                return blogs;
                 }
             }
         }
-
         public void Insert(Blog entry)
         {
             using (SqlConnection conn = Connection)
