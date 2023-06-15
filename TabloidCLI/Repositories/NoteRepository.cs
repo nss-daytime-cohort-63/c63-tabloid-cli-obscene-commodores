@@ -16,7 +16,16 @@ namespace TabloidCLI.Repositories
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "DELETE FROM Note WHERE Id = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
         public Note Get(int id)
@@ -31,25 +40,32 @@ namespace TabloidCLI.Repositories
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SELECT Title, CreateDateTime, Content FROM Note";
+                    cmd.CommandText = @"SELECT Id, Title, CreateDateTime, Content, PostId FROM Note";
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         List<Note> notes = new List<Note>();
                         while (reader.Read())
                         {
+                            int IdColumn = reader.GetOrdinal("Id");
                             int TitleColumn = reader.GetOrdinal("Title");
                             int CreateDateTimeColumn = reader.GetOrdinal("CreateDateTime");
                             int ContentColumn = reader.GetOrdinal("Content");
+                            int PostIdColumn = reader.GetOrdinal("PostId");
 
+
+                            int IdValue = reader.GetInt32(IdColumn);
                             string TitleValue = reader.GetString(TitleColumn);
                             DateTime CreateDateTimeValue = reader.GetDateTime(CreateDateTimeColumn);
                             string ContentValue = reader.GetString(ContentColumn);
+                            int PostIdValue = reader.GetInt32(PostIdColumn);
 
                             Note note = new Note()
                             {
+                                Id = IdValue,
                                 Title = TitleValue,
                                 CreateDateTime = CreateDateTimeValue,
-                                Content = ContentValue
+                                Content = ContentValue,
+                                PostId = PostIdValue,
                             };
                             notes.Add(note);
                         }
