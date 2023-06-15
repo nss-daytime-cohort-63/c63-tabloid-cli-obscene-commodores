@@ -190,6 +190,29 @@ namespace TabloidCLI.UserInterfaceManagers
                     break;
                 case 3:
                     Console.Write("Remove a tag from this blog : ");
+                    Blog Blog = _blogRepository.Get(_blogId);
+
+                    Console.WriteLine($"Which tag would you like to remove from {selBlog.Title}?");
+                    List<Tag> tagsToDelete = selBlog.Tags;
+
+                    for (int i = 0; i < tagsToDelete.Count; i++)
+                    {
+                        Tag tag = tagsToDelete[i];
+                        Console.WriteLine($" {i + 1}) {tag.Name}");
+                    }
+                    Console.Write("> ");
+
+                    string inputForTagDelete = Console.ReadLine();
+                    try
+                    {
+                        int choice = int.Parse(inputForTagDelete);
+                        Tag tag = tagsToDelete[choice - 1];
+                        _blogRepository.DeleteTag(selBlog.Id, tag.Id);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Invalid Selection. Won't remove any tags.");
+                    }
                     break;
                 case 4:
                     List<Post> posts = _postRepository.GetAll();
