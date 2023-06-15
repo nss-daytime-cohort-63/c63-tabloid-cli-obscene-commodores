@@ -45,7 +45,7 @@ namespace TabloidCLI.UserInterfaceManagers
                     AddNote();
                     return this;
                 case 3:
-                    Console.WriteLine("Remove a note goes here");
+                    DeleteNote();
                     return this;
                 case 0:
                     return _parentUI;
@@ -58,8 +58,18 @@ namespace TabloidCLI.UserInterfaceManagers
         {
             Console.Write("Input title of new note : ");
             string newTitle = Console.ReadLine();
+            while (string.IsNullOrEmpty(newTitle))
+            {
+                Console.Write("Input title of new note : ");
+                newTitle = Console.ReadLine();
+            }
             Console.Write("Input the content of your new note : ");
             string newContent = Console.ReadLine();
+            while (string.IsNullOrEmpty(newContent))
+            {
+                Console.Write("Input the content of your new note : ");
+                newContent = Console.ReadLine();
+            }
             DateTime newDate = DateTime.Now;
             Note newNote = new Note()
             {
@@ -76,8 +86,28 @@ namespace TabloidCLI.UserInterfaceManagers
             foreach (Note n in listedNotes)
             {
                 Console.WriteLine(@$"Title: {n.Title}, Time: {n.CreateDateTime}
-                                    Content: {n.Content}");
+Content: {n.Content}");
             }
+        }
+        public void DeleteNote()
+        {
+            List<Note> notes = _noteRepository.GetAll();
+            foreach (Note n in notes)
+            {
+                Console.WriteLine(@$" {n.Id}) {n.Title}
+                                    {n.Content}");
+            }
+            Console.Write("Which note would you like to delete? : ");
+            int delNoteId = int.Parse(Console.ReadLine());
+            while (!notes.Select(n => n.Id).Contains(delNoteId))
+            {
+                Console.WriteLine("Invalid Selection");
+                Console.Write("Which note would you like to delete? : ");
+                delNoteId = int.Parse(Console.ReadLine());
+            }
+            _noteRepository.Delete(delNoteId);
+            Note foundNote = notes.FirstOrDefault(n => n.Id == delNoteId);
+            Console.WriteLine($"The {foundNote.Title} note has been deleted.");
         }
     }
 }
