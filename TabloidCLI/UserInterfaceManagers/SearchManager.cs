@@ -83,6 +83,9 @@ namespace TabloidCLI.UserInterfaceManagers
 
         }
 
-        //private void 
+        private void SearchAll()
+        {
+
+        }
     }
 }
