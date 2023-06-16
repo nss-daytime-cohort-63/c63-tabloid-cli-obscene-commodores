@@ -8,18 +8,23 @@ using TabloidCLI.Models;
 
 namespace TabloidCLI.Repositories
 {
-    internal class BlogRepository : DatabaseConnector, IRepository<Blog>
+    public class BlogRepository : DatabaseConnector, IRepository<Blog>
     {
         public BlogRepository(string connectionString) : base(connectionString) { }
 
         public void Delete(int id)
         {
-            using (SqlConnection connection = new SqlConnection())
+            using (SqlConnection conn = Connection)
             {
-                connection.Open();
-                using (SqlCommand cmd = connection.CreateCommand())
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = "DELETE FROM Blog WHERE Id = @id";
+                    cmd.CommandText = @"ALTER TABLE BlogTag
+                                      DROP CONSTRAINT[FK_BlogTag_Blog]
+                                      ALTER TABLE BlogTag
+                                      ADD CONSTRAINT [FK_BlogTag_Blog]
+                                      FOREIGN KEY (BlogId) REFERENCES Blog(Id) ON DELETE CASCADE
+                                      DELETE FROM Blog WHERE Id = @id";
                     cmd.Parameters.AddWithValue("@id", id);
                     cmd.ExecuteNonQuery();
                 }

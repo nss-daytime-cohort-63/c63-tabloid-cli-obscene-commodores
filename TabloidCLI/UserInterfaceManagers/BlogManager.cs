@@ -15,8 +15,8 @@ namespace TabloidCLI.UserInterfaceManagers
         private string _connectionString;
         private int _blogId;
 
-        public MainMenuManager MainMenuManager { get; }
-        public string CONNECTION_STRING { get; }
+        
+        
 
         public BlogManager(IUserInterfaceManager parentUI, string connectionString)
         {
@@ -86,6 +86,11 @@ namespace TabloidCLI.UserInterfaceManagers
         }
         private void DeleteBlog()
         {
+            List<Blog> blogList = _blogRepository.GetAll();
+            foreach(Blog blog in blogList)
+            {
+                Console.WriteLine($" Id: {blog.Id}) {blog.Title}");
+            }
             Console.Write("Enter Blog Id to Delete: ");
             int delBlogId = Int32.Parse(Console.ReadLine());
             _blogRepository.Delete(delBlogId);
