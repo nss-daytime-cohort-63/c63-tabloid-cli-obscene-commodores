@@ -147,19 +147,19 @@ namespace TabloidCLI.UserInterfaceManagers
             int selectedPostId = int.Parse(Console.ReadLine());
             Post postToEdit = posts.FirstOrDefault(p => p.Id == selectedPostId);
             Console.WriteLine();
-            Console.Write("New title (blank to leave unchanged: ");
+            Console.Write("New title (blank to leave unchanged): ");
             string title = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(title))
             {
                 postToEdit.Title = title;
             }
-            Console.Write("New url (blank to leave unchanged: ");
+            Console.Write("New url (blank to leave unchanged): ");
             string url = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(url))
             {
                 postToEdit.Url = url;
             }
-            Console.Write("New Author by Id (blank to leave unchanged: ");
+            Console.Write("New Author by Id (blank to leave unchanged): ");
             List<Author> authors = _authorRepository.GetAll();
             foreach (Author author in authors)
             {
@@ -171,7 +171,7 @@ namespace TabloidCLI.UserInterfaceManagers
                 int parsedAuthorId = int.Parse(selectedAuthorId);
                 postToEdit.Author = authors.FirstOrDefault(a => a.Id == parsedAuthorId);
             }
-            Console.Write("New Blog by Id (blank to leave unchanged: ");
+            Console.Write("New Blog by Id (blank to leave unchanged): ");
             List<Blog> blogs = _blogRepository.GetAll();
             foreach (Blog blog in blogs)
             {

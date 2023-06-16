@@ -100,12 +100,12 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.Write("Which blog would you like to edit? : ");
             int updateId = Int32.Parse(Console.ReadLine());
             Blog updatedBlog = blogList.FirstOrDefault(blog => blog.Id == updateId);
-            Console.Write("Update the Title");
+            Console.Write("Update the Title : ");
             string updatedBlogTitle = Console.ReadLine();
             while(string.IsNullOrEmpty(updatedBlogTitle))
             {
                 Console.WriteLine("Invalid Entry");
-                Console.Write("Update the Title");
+                Console.Write("Update the Title : ");
                 updatedBlogTitle = Console.ReadLine();
             }
             Console.Write("Update the Url : ");
