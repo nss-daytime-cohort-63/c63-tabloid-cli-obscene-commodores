@@ -200,7 +200,18 @@ namespace TabloidCLI.Repositories
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"DELETE FROM Post WHERE id = @id";
+                    cmd.CommandText = @"alter table Note
+                                        drop constraint[FK_Note_Posti] 
+                                        alter table Note 
+                                        add constraint[FK_Note_Posti]
+                                        Foreign Key (PostId) references post(Id) on delete cascade
+
+                                        alter table PostTag
+                                        drop constraint[FK_PostTag_Post]
+                                        alter table PostTag
+                                        add constraint[FK_PostTag_Post]
+                                        Foreign Key (PostId) references post(Id) on delete cascade
+                                        DELETE FROM Post WHERE id = @id";
                     cmd.Parameters.AddWithValue("@id", id);
 
                     cmd.ExecuteNonQuery();
