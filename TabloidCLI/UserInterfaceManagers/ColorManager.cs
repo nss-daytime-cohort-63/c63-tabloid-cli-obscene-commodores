@@ -11,7 +11,6 @@ namespace TabloidCLI.UserInterfaceManagers
         public ColorManager(IUserInterfaceManager parentUI, string cONNECTION_STRING)
         {
             _parentUI = parentUI;
-            /* this.mainMenuManager = mainMenuManager;*/
             this.cONNECTION_STRING = cONNECTION_STRING;
         }
 
@@ -23,6 +22,7 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine("3) Red");
             Console.WriteLine("4) Magenta");
             Console.WriteLine("5) Yellow");
+            Console.WriteLine("6) Back to Black");
             Console.WriteLine("0) Return to menu");
 
             Console.WriteLine("Enter the number corresponding to color: ");
@@ -44,6 +44,9 @@ namespace TabloidCLI.UserInterfaceManagers
                     return this;
                 case 5:
                     Console.BackgroundColor = ConsoleColor.DarkYellow;
+                    return this;
+                case 6:
+                    Console.BackgroundColor = ConsoleColor.Black;
                     return this;
                 case 0:
                     return _parentUI;
