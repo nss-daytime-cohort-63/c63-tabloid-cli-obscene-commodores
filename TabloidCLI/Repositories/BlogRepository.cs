@@ -65,11 +65,11 @@ namespace TabloidCLI.Repositories
 
                         if (!reader.IsDBNull(reader.GetOrdinal("TagId")))
                         {
-                            blog.Tags.Add(new Tag()
-                            {
-                                Id = reader.GetInt32(reader.GetOrdinal("TagId")),
-                                Name = reader.GetString(reader.GetOrdinal("Name")),
-                            });
+                                 blog.Tags.Add(new Tag()
+                             {
+                                      Id = reader.GetInt32(reader.GetOrdinal("TagId")),
+                                      Name = reader.GetString(reader.GetOrdinal("Name")),
+                             });
                         }
                     }
 

@@ -161,22 +161,21 @@ namespace TabloidCLI.UserInterfaceManagers
                     {
                         foreach (Tag tag in selBlog.Tags)
                         {
-                            Console.Write($"{tag}  ");
+                            Console.Write($"{tag.Name}  ");
                             Console.WriteLine();
                         }
                     }
             break;
                 case 2:
                     Console.Write("Add a tag to this blog : ");
-                    Blog blog = _blogRepository.Get(_blogId);
 
                     Console.WriteLine($"Which tag would you like to add to {selBlog.Title}?");
                     List<Tag> tags = _tagRepository.GetAll();
 
                     for (int i = 0; i < tags.Count; i++)
                     {
-                        Tag tag = tags[i];
-                        Console.WriteLine($" {i + 1}) {tag.Name}");
+                        Tag loopTag = tags[i];
+                        Console.WriteLine($" {i + 1}) {loopTag.Name}");
                     }
                     Console.Write("> ");
 
@@ -185,8 +184,23 @@ namespace TabloidCLI.UserInterfaceManagers
                     {
                         int choice = int.Parse(input);
                         Tag tag = tags[choice - 1];
-                        _blogRepository.InsertTag(selBlog, tag);
-                        Console.WriteLine("Tag Added!");
+                        if (selBlog.Tags.Count() == 0)
+                        {
+                            _blogRepository.InsertTag(selBlog, tag);
+                            Console.WriteLine("Tag Added!");
+                        }
+                        foreach (Tag t in selBlog.Tags)
+                        {
+                            if(t.Id != tag.Id)
+                            {
+                                _blogRepository.InsertTag(selBlog, tag);
+                                Console.WriteLine("Tag Added!");
+                            }
+                            else
+                            {
+                                Console.WriteLine("This tag is already here!");
+                            }
+                        }                                             
                     }
                     catch (Exception ex)
                     {
