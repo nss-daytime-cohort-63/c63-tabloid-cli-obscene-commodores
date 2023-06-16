@@ -147,7 +147,24 @@ namespace TabloidCLI
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"DELETE FROM Author WHERE id = @id";
+                    cmd.CommandText = @"                                     
+                                        ALTER TABLE AuthorTag
+                                      DROP CONSTRAINT[FK_AuthorTag_Tag]
+                                      ALTER TABLE AuthorTag
+                                      ADD CONSTRAINT [FK_AuthorTag_Tag]
+                                      FOREIGN KEY (TagId) REFERENCES Tag(Id) ON DELETE CASCADE
+                                        ALTER TABLE Post
+                                      DROP CONSTRAINT[FK_Post_Author]
+                                      ALTER TABLE Post
+                                      ADD CONSTRAINT [FK_Post_Author]
+                                      FOREIGN KEY (AuthorId) REFERENCES Author(Id) ON DELETE CASCADE
+                                        alter table Note
+                                        drop constraint[FK_Note_Posti] 
+                                        alter table Note 
+                                        add constraint[FK_Note_Posti]
+                                        Foreign Key (PostId) references post(Id) on delete cascade
+
+                                        DELETE FROM Author WHERE id = @id";
                     cmd.Parameters.AddWithValue("@id", id);
 
                     cmd.ExecuteNonQuery();
