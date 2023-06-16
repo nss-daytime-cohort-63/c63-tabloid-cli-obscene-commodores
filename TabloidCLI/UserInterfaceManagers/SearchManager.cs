@@ -50,7 +50,7 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void SearchAuthors()
         {
-            Console.Write("Tag> ");
+            Console.Write("Search by Tag Name: ");
             string tagName = Console.ReadLine();
 
             SearchResults<Author> results = _tagRepository.SearchAuthors(tagName);
